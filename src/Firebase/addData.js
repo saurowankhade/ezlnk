@@ -1,5 +1,5 @@
 import { db } from "./firebase";
-import {collection, doc,getDoc,setDoc} from "firebase/firestore";
+import {collection, doc,getDoc,onSnapshot,setDoc} from "firebase/firestore";
 
 class Firestore {
     async addToFirebase(collection, data, documentID) {
@@ -11,28 +11,30 @@ class Firestore {
       }
     }  
 
-    async getAllUser(){
-      try {
-        // Reference to the collection
-        const collectionRef = collection(db, "Link");
-
-    // Get the documents based on the query
-        const snapshot = await getDoc(collectionRef);
-        
+    async getAllData() {
+      // Reference to the collection
+      const collectionRef = collection(db, "Link");
+    
+      // Real-time listener using onSnapshot
+      const unsubscribe = onSnapshot(collectionRef, (snapshot) => {
         if (snapshot.empty) {
-          console.log('No matching documents.');
-          return [];
+          console.log('No documents available.');
+          return;
         }
     
-        // Map document data
+        // Map the document data to an array
         const documents = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
         
+        console.log(documents); // Handle the documents (you can set them in state here)
         return documents;
-      } catch (error) {
-        console.error('Error fetching documents:', error);
-        return [];
-      }
+      }, (error) => {
+        console.error('Error listening for updates:', error);
+      });
+    
+      // Return unsubscribe function to remove listener when needed
+      return unsubscribe;
     }
+
    
   }
   
