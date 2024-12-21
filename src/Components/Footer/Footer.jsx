@@ -1,7 +1,7 @@
 
 const Footer = () => {
   return (
-   <footer className="border-t fixed bottom-0  w-full py-4 mt-10">
+   <footer className="border-t bg-white  w-full py-4 mt-10">
     <div className="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center px-4 space-y-4 sm:space-y-0"><div className="flex space-x-6">
         
         <a href="http://peerlist.io/saurowankhade" target="_blank">
