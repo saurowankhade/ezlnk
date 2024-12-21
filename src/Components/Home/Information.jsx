@@ -14,7 +14,8 @@ const Information = () => {
 
         <div className="flex gap-6 mt-4 mb-4 justify-between">
             <button className="p-2 shadow-md border rounded-md w-32 bg-black text-white hover:bg-[#000000e1]">Get Started</button>
-            <button className="p-2 border shadow-md rounded-md py-2 w-32 bg-slate-200 hover:bg-slate-50">Demo</button>
+            <button onClick={()=>{window.open('https://www.loom.com/share/75c03cf0b4274ebabea8a359d9f164c2?sid=5d6ddb5b-b9eb-4100-945a-927dc3d97115')}} className="p-2 border shadow-md rounded-md py-2 w-32 bg-slate-200 hover:bg-slate-50">Demo</button>
+
         </div>
     </div>
   )
