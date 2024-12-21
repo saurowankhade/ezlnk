@@ -1,4 +1,4 @@
-import React from 'react'
+import Inputs from '../Inputs/Inputs'
 import Nav from '../Nav/Nav'
 import Information from './Information'
 
@@ -7,6 +7,7 @@ const Home = () => {
     <div>
       <Nav />
       <Information />
+      <Inputs />
     </div>
   )
 }
