@@ -1,5 +1,5 @@
 import { db } from "./firebase";
-import {collection, doc,getDoc,onSnapshot,setDoc} from "firebase/firestore";
+import {collection, doc,getDoc,onSnapshot,setDoc, updateDoc} from "firebase/firestore";
 
 class Firestore {
     async addToFirebase(collection, data, documentID) {
@@ -35,6 +35,26 @@ class Firestore {
       return unsubscribe;
     }
 
+    async getOneData (collectionName,docsId)  {
+      try {
+        const docRef = doc(db, collectionName, docsId);
+        const docSnap = await getDoc(docRef);
+        return { status: 200, message: 'Data saved!' , data: docSnap.exists() ? docSnap.data() : "" };
+        
+      } catch (error) {
+        return { status: 500, message: error , data: "" };
+      }
+    }
+
+    async updateData (collectionName, docId, updatedData) {
+      try {
+        const docRef = doc(db, collectionName, docId); // Reference to the document
+        await updateDoc(docRef, updatedData); // Update the document
+        return { status: 200, message: 'Data saved!' };
+      } catch (error) {
+        return { status: 500, message: 'Data saved!',error };
+      }
+    }
    
   }
   
