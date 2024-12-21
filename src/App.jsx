@@ -6,13 +6,14 @@ import DataContext from './Context/UserContext/DataContext';
 import { collection, onSnapshot } from 'firebase/firestore';
 import { db } from './Firebase/firebase';
 import { getItem, setItem } from './Firebase/addData';
+import RedirectScreen from './Components/RedirectScreen/RedirectScreen';
 
 function App() {
   const {setData} = useContext(DataContext);
   const getLocalData = getItem('Id')
   useEffect(() => {
     // Reference to the collection
-    const collectionRef = collection(db, (getLocalData|| 'Link'));
+    const collectionRef = collection(db, "Link");
 
     // Set up real-time listener
     const unsubscribe = onSnapshot(collectionRef, (snapshot) => {
@@ -45,7 +46,7 @@ function App() {
       <Router>
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/:Id" element={<>Hello /about</>} />
+          <Route path="/:Id" element={<RedirectScreen />} />
         </Routes>
       </Router>
 

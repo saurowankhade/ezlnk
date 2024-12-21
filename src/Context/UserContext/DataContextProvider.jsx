@@ -1,15 +1,13 @@
 import { useEffect, useState } from "react";
 import DataContext from "./DataContext";
-import addFirebase, { getItem } from "../../Firebase/addData";
 import { collection, onSnapshot } from "firebase/firestore";
 import { db } from "../../Firebase/firebase";
 
 const DataContextProvider = ({children})=>{
     const [data,setData] = useState([]);
-    const getLocalData = getItem('Id');
     useEffect(() => {
       // Reference to the collection
-      const collectionRef = collection(db, (getLocalData || 'Link'));
+      const collectionRef = collection(db, 'Link');
   
       // Set up real-time listener
       const unsubscribe = onSnapshot(collectionRef, (snapshot) => {
@@ -30,7 +28,7 @@ const DataContextProvider = ({children})=>{
       return () => {
         unsubscribe();
       };
-    }, [getLocalData, setData]);
+    }, [ setData]);
 
     return (
         <DataContext.Provider value={{data,setData}}>

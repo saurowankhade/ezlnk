@@ -1,4 +1,4 @@
-import { useContext, useEffect } from "react"
+import { useContext, useEffect, useState } from "react"
 import DataContext from "../../Context/UserContext/DataContext"
 import { collection, onSnapshot } from "firebase/firestore";
 import { db } from "../../Firebase/firebase";
@@ -6,11 +6,11 @@ import { getItem } from "../../Firebase/addData";
 import toast from "react-hot-toast";
 
 const Generate = () => {
-    const { data, setData } = useContext(DataContext);
+    const [ data, setData ] = useState([]);
     const getLocalData = getItem('Id');
     useEffect(() => {
         // Reference to the collection
-        const collectionRef = collection(db, (getLocalData));
+        const collectionRef = collection(db, "Link");
 
         // Set up real-time listener
         const unsubscribe = onSnapshot(collectionRef, (snapshot) => {
@@ -22,8 +22,9 @@ const Generate = () => {
 
             // Map the document data to an array and update the state
             const newDocuments = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-            setData(newDocuments);
-            console.log(newDocuments);
+            const data = newDocuments.filter((data)=> data?.LocalId === getLocalData);
+            // console.log("New data",data);
+            setData(data)
             
         }, (error) => {
             console.error('Error listening for updates:', error);
@@ -46,12 +47,12 @@ const Generate = () => {
 
          {
             data.map((data)=>(
-                <div key={data.Key+data.Date} className="relative flex items-center justify-between gap-2 rounded-xl border border-gray-200 bg-white p-3 max-w-full shadow-none drop-shadow-sm">
+                <div key={data.Key+data.Date} className="relative  mt-2 flex items-center justify-between gap-2 rounded-xl border border-gray-200 bg-white p-3 max-w-full shadow-none drop-shadow-sm">
                 <div>
                  <div className="flex min-w-0 items-center gap-x-3"><div className="flex-none rounded-full border border-gray-200 bg-gradient-to-t from-gray-100 p-2">
                  </div>
                      <div className="min-w-0 overflow-hidden">
-                        <div className="flex items-center gap-1 sm:gap-2 "><a className="truncate font-semibold text-gray-800 hover:text-black w-32" href={`ezlnk.vercel.app/${data?.Key}`} target="_blank" rel="noreferrer">{`ezlnk.vercel.app/${data?.Key}`}</a><div className="flex items-center gap-1 sm:gap-2">
+                        <div className="flex items-center gap-1 sm:gap-2 "><a className="truncate font-semibold text-gray-800 hover:text-black w-32" href={`/${data?.Key}`} target="_blank" rel="noreferrer">{`ezlnk.vercel.app/${data?.Key}`}</a><div className="flex items-center gap-1 sm:gap-2">
                         
                         <button onClick={() => handleCopyButton(`ezlnk.vercel.app/${data?.Key}`)} className="relative group rounded-full p-1.5 transition-all duration-75 border border-gray-200 bg-gray-50 hover:scale-100 hover:bg-gray-100 active:bg-gray-100" type="button">
                         <span className="sr-only">Copy</span><svg fill="none" shapeRendering="geometricPrecision" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" viewBox="0 0 24 24" width="14" height="14" className="h-3.5 w-3.5"><path d="M8 17.929H6c-1.105 0-2-.912-2-2.036V5.036C4 3.91 4.895 3 6 3h8c1.105 0 2 .911 2 2.036v1.866m-6 .17h8c1.105 0 2 .91 2 2.035v10.857C20 21.09 19.105 22 18 22h-8c-1.105 0-2-.911-2-2.036V9.107c0-1.124.895-2.036 2-2.036z"></path></svg></button>
@@ -59,7 +60,7 @@ const Generate = () => {
                         </div></div>
                         
                         <div className="flex items-center gap-1"><svg viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-gray-400"><g fill="currentColor"><path d="M15.25,9.75H4.75c-1.105,0-2-.895-2-2V3.75" fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5"></path><polyline fill="none" points="11 5.5 15.25 9.75 11 14" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5"></polyline></g></svg>
-                        <a href={data?.Link} target="_blank" rel="noopener noreferrer" className="max-w-60 truncate text-sm text-gray-400 underline-offset-4 transition-all hover:text-gray-700 hover:underline sm:max-w-72">{data?.Link}</a></div>
+                        <a href={data?.Link} target="_blank" rel="noopener noreferrer" className="max-w-60 w-36 truncate text-sm text-gray-400 underline-offset-4 transition-all hover:text-gray-700 hover:underline sm:max-w-72">{data?.Link}</a></div>
                         
                         </div></div>
                  </div>

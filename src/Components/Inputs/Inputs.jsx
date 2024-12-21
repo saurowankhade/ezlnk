@@ -27,17 +27,19 @@ const Inputs = () => {
             toast.error('Already taken! Please select something else!')
         } else {
             setIsLoading(true);
-            addFirebase.addToFirebase(getId, {
+            addFirebase.addToFirebase("Link", {
                 Link:Link,
                 Key:Key,
                 MobileClick:0,
                 TabClick:0,
                 WebClick:0,
                 Date:new Date(),
-                GeneratedLink:`${Link}/${Key}`
+                LocalId:getId
             }, Key).then((status)=>{
                 if(status.status === 200){
                     setIsLoading(false);
+                    link.current.value = ''
+                    keys.current.value = ''
                     toast.success('Added')
                 } else{
                     setIsLoading(false)
