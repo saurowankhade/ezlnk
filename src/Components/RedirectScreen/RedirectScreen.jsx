@@ -15,10 +15,14 @@ const RedirectScreen = () => {
               const fetchedData = status?.data;
               const device = getDeviceType();
       
-              // Ensure fetchedData is valid and contains the link
               if (fetchedData?.Link) {
-                // Open the link immediately
-                window.open(fetchedData.Link, "_blank", "noopener,noreferrer");
+                // Ensure the URL starts with "http" or "https"
+                const validLink = fetchedData.Link.startsWith("http")
+                  ? fetchedData.Link
+                  : `https://${fetchedData.Link}`;
+      
+                // Open the link in the current tab
+                window.location.href = validLink;
       
                 // Update the device count asynchronously
                 await addFirebase.updateData("Link", Id, {
@@ -26,25 +30,23 @@ const RedirectScreen = () => {
                 });
               } else {
                 // Redirect to fallback if no link is found
-                window.open("https://ezlnk.vercel.app", "_blank", "noopener,noreferrer");
+                window.location.href = "https://ezlnk.vercel.app";
               }
             } else {
               // Fallback redirect for status !== 200
-              window.open("https://ezlnk.vercel.app", "_blank", "noopener,noreferrer");
+              window.location.href = "https://ezlnk.vercel.app";
             }
           } catch (error) {
             // Fallback redirect for errors
-            window.open("https://ezlnk.vercel.app", "_blank", "noopener,noreferrer");
+            window.location.href = "https://ezlnk.vercel.app";
           }
         };
       
+        // Fetch and update only once
         fetchDataAndUpdate();
       }, [Id]);
       
       
-    useEffect(()=>{
-        
-    },[Id])
     function getDeviceType() {
         const width = window.innerWidth;
         if (width <= 768) {
