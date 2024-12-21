@@ -28,7 +28,7 @@ function App() {
     }, (error) => {
       console.error('Error listening for updates:', error);
     });
-
+ 
     // Cleanup listener when the component unmounts
     return () => {
       unsubscribe();
