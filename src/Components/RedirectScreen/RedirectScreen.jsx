@@ -22,11 +22,13 @@ const RedirectScreen = () => {
                   : `https://${fetchedData.Link}`;
       
                 // Open the link in the current tab
-                window.location.href = validLink;
+               
       
                 // Update the device count asynchronously
                 await addFirebase.updateData("Link", Id, {
                   [device]: Number(fetchedData[device] || 0) + 1,
+                }).then(()=>{
+                    window.location.href = validLink;
                 });
               } else {
                 // Redirect to fallback if no link is found
