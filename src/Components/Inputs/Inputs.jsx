@@ -22,8 +22,6 @@ const Inputs = () => {
             toast.error('Fill all infromation')
         } else if(!isValidURL(Link)){
             toast.error('Invaild URL')
-        } else if(Key.length > 10){
-            toast.error('Only 10 character allowed');
         }
         else if (data.some(item => item.id === Key)) {
             toast.error('Already taken! Please select something else!')
