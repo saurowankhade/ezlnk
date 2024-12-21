@@ -95,7 +95,7 @@ const Inputs = () => {
                 <div className="flex w-full justify-center mt-4 mb-4">
                     {
                         isLoading ? <Loading type='bubbles' color='#000' height={'10%'} width={'10%'} /> :
-                            <button onClick={handleClick} className="bg-[#000000] text-white rounded-full cursor-pointer px-4 py-1 text-lg shadow-xl hover:bg-[#000000e7]" >Save</button>
+                            <button onClick={handleClick} className="bg-[#000000] text-white rounded-full cursor-pointer px-4 py-1 text-lg shadow-xl hover:bg-[#000000e7]" >Generate</button>
                     }
                 </div>
 
