@@ -32,7 +32,7 @@ const Footer = () => {
     
 
     <div>
-        Buid by Saurabh Wankhade
+        Build by Saurabh Wankhade
     </div>
     
     </div></footer>
