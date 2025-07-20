@@ -7,10 +7,17 @@ import { collection, onSnapshot } from 'firebase/firestore';
 import { db } from './Firebase/firebase';
 import { getItem, setItem } from './Firebase/addData';
 import RedirectScreen from './Components/RedirectScreen/RedirectScreen';
+import LandingPage from './LandingPage';
 
 function App() {
   const {setData} = useContext(DataContext);
   const getLocalData = getItem('Id')
+
+  
+
+// console.log(makeid(5));
+
+
   useEffect(() => {
     // Reference to the collection
     const collectionRef = collection(db, "Link");
